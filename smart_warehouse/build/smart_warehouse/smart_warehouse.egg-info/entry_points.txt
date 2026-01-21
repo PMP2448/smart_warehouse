@@ -1,0 +1,3 @@
+[console_scripts]
+aruco_generator = smart_warehouse.aruco_generator:main
+monitor_aruco = smart_warehouse.monitor_aruco:main

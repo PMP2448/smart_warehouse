@@ -1,0 +1,66 @@
+[0.000000] (-) TimerEvent: {}
+[0.002495] (smart_warehouse) JobQueued: {'identifier': 'smart_warehouse', 'dependencies': OrderedDict()}
+[0.002701] (smart_warehouse) JobStarted: {'identifier': 'smart_warehouse'}
+[0.097052] (-) TimerEvent: {}
+[0.197850] (-) TimerEvent: {}
+[0.300936] (-) TimerEvent: {}
+[0.405015] (-) TimerEvent: {}
+[0.506357] (-) TimerEvent: {}
+[0.608378] (-) TimerEvent: {}
+[0.709024] (-) TimerEvent: {}
+[0.809871] (-) TimerEvent: {}
+[0.910993] (-) TimerEvent: {}
+[1.011974] (-) TimerEvent: {}
+[1.112739] (-) TimerEvent: {}
+[1.213458] (-) TimerEvent: {}
+[1.314309] (-) TimerEvent: {}
+[1.415045] (-) TimerEvent: {}
+[1.517173] (-) TimerEvent: {}
+[1.620551] (-) TimerEvent: {}
+[1.721249] (-) TimerEvent: {}
+[1.821988] (-) TimerEvent: {}
+[1.922699] (-) TimerEvent: {}
+[1.963580] (smart_warehouse) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'develop', '--editable', '--build-directory', '/home/pmp/ros2_ws/src/smart_warehouse/build/smart_warehouse/build', '--no-deps', 'symlink_data'], 'cwd': '/home/pmp/ros2_ws/src/smart_warehouse/build/smart_warehouse', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'pmp', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'XDG_SESSION_TYPE': 'wayland', 'CLUTTER_DISABLE_MIPMAPPED_TEXT': '1', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/pmp', 'OLDPWD': '/home/pmp/ros2_ws/src', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'SYSTEMD_EXEC_PID': '2476', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'COLCON_PREFIX_PATH': '/home/pmp/ros2_ws/install', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'pmp', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@wayland.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'pmp', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'PATH': '/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/home/pmp/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/pmp/.local/bin', 'SESSION_MANAGER': 'local/pmp-VMware-Virtual-Platform:@/tmp/.ICE-unix/2442,unix/pmp-VMware-Virtual-Platform:/tmp/.ICE-unix/2442', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/1d832695_2258_4179_93d6_56697a143511', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.C94XI3', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'GNOME_TERMINAL_SERVICE': ':1.107', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'ROS_DOMAIN_ID': '4', 'AMENT_PREFIX_PATH': '/home/pmp/ros2_ws/install/practica3:/home/pmp/ros2_ws/install/cursor:/opt/ros/jazzy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/pmp/ros2_ws/src/smart_warehouse/build/smart_warehouse', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/pmp/ros2_ws/src/smart_warehouse/build/smart_warehouse/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/pmp/ros2_ws/src/smart_warehouse/install/smart_warehouse/lib/python3.12/site-packages:/home/pmp/ros2_ws/build/practica3:/home/pmp/ros2_ws/install/practica3/lib/python3.12/site-packages:/home/pmp/ros2_ws/build/cursor:/home/pmp/ros2_ws/install/cursor/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '7600', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor'}, 'shell': False}
+[2.023141] (-) TimerEvent: {}
+[2.123863] (-) TimerEvent: {}
+[2.224503] (-) TimerEvent: {}
+[2.325177] (-) TimerEvent: {}
+[2.427693] (-) TimerEvent: {}
+[2.528539] (-) TimerEvent: {}
+[2.629116] (-) TimerEvent: {}
+[2.729429] (smart_warehouse) StdoutLine: {'line': b'running develop\n'}
+[2.732939] (-) TimerEvent: {}
+[2.837032] (-) TimerEvent: {}
+[2.937795] (-) TimerEvent: {}
+[3.038660] (-) TimerEvent: {}
+[3.139389] (-) TimerEvent: {}
+[3.153093] (smart_warehouse) StderrLine: {'line': b'/usr/lib/python3/dist-packages/setuptools/command/easy_install.py:363: UserWarning: Unbuilt egg for pytest-repeat [unknown version] (/usr/lib/python3/dist-packages)\n'}
+[3.153594] (smart_warehouse) StderrLine: {'line': b'  self.local_index = Environment(self.shadow_path + sys.path)\n'}
+[3.239763] (-) TimerEvent: {}
+[3.262239] (smart_warehouse) StdoutLine: {'line': b'running egg_info\n'}
+[3.262651] (smart_warehouse) StdoutLine: {'line': b'creating smart_warehouse.egg-info\n'}
+[3.306990] (smart_warehouse) StdoutLine: {'line': b'writing smart_warehouse.egg-info/PKG-INFO\n'}
+[3.307446] (smart_warehouse) StdoutLine: {'line': b'writing dependency_links to smart_warehouse.egg-info/dependency_links.txt\n'}
+[3.308288] (smart_warehouse) StdoutLine: {'line': b'writing entry points to smart_warehouse.egg-info/entry_points.txt\n'}
+[3.309726] (smart_warehouse) StdoutLine: {'line': b'writing requirements to smart_warehouse.egg-info/requires.txt\n'}
+[3.310138] (smart_warehouse) StdoutLine: {'line': b'writing top-level names to smart_warehouse.egg-info/top_level.txt\n'}
+[3.310778] (smart_warehouse) StdoutLine: {'line': b"writing manifest file 'smart_warehouse.egg-info/SOURCES.txt'\n"}
+[3.340387] (-) TimerEvent: {}
+[3.400682] (smart_warehouse) StdoutLine: {'line': b"reading manifest file 'smart_warehouse.egg-info/SOURCES.txt'\n"}
+[3.403635] (smart_warehouse) StdoutLine: {'line': b"writing manifest file 'smart_warehouse.egg-info/SOURCES.txt'\n"}
+[3.441293] (-) TimerEvent: {}
+[3.452679] (smart_warehouse) StdoutLine: {'line': b'running build_ext\n'}
+[3.453292] (smart_warehouse) StdoutLine: {'line': b'Creating /home/pmp/ros2_ws/src/smart_warehouse/install/smart_warehouse/lib/python3.12/site-packages/smart-warehouse.egg-link (link to .)\n'}
+[3.455562] (smart_warehouse) StdoutLine: {'line': b'Installing aruco_generator script to /home/pmp/ros2_ws/src/smart_warehouse/install/smart_warehouse/lib/smart_warehouse\n'}
+[3.455969] (smart_warehouse) StdoutLine: {'line': b'Installing monitor_aruco script to /home/pmp/ros2_ws/src/smart_warehouse/install/smart_warehouse/lib/smart_warehouse\n'}
+[3.458828] (smart_warehouse) StdoutLine: {'line': b'\n'}
+[3.459133] (smart_warehouse) StdoutLine: {'line': b'Installed /home/pmp/ros2_ws/src/smart_warehouse/build/smart_warehouse\n'}
+[3.459486] (smart_warehouse) StdoutLine: {'line': b'running symlink_data\n'}
+[3.459738] (smart_warehouse) StdoutLine: {'line': b'creating /home/pmp/ros2_ws/src/smart_warehouse/install/smart_warehouse/share/ament_index\n'}
+[3.460041] (smart_warehouse) StdoutLine: {'line': b'creating /home/pmp/ros2_ws/src/smart_warehouse/install/smart_warehouse/share/ament_index/resource_index\n'}
+[3.460362] (smart_warehouse) StdoutLine: {'line': b'creating /home/pmp/ros2_ws/src/smart_warehouse/install/smart_warehouse/share/ament_index/resource_index/packages\n'}
+[3.460615] (smart_warehouse) StdoutLine: {'line': b'symbolically linking /home/pmp/ros2_ws/src/smart_warehouse/build/smart_warehouse/resource/smart_warehouse -> /home/pmp/ros2_ws/src/smart_warehouse/install/smart_warehouse/share/ament_index/resource_index/packages\n'}
+[3.460861] (smart_warehouse) StdoutLine: {'line': b'symbolically linking /home/pmp/ros2_ws/src/smart_warehouse/build/smart_warehouse/package.xml -> /home/pmp/ros2_ws/src/smart_warehouse/install/smart_warehouse/share/smart_warehouse\n'}
+[3.497416] (smart_warehouse) CommandEnded: {'returncode': 0}
+[3.528348] (smart_warehouse) JobEnded: {'identifier': 'smart_warehouse', 'rc': 0}
+[3.531767] (-) EventReactorShutdown: {}

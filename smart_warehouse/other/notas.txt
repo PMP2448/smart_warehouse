@@ -1,0 +1,23 @@
+Para testear mvsim, arucos, lectura de arucos, ...
+
+Para ejecutar mvsim: 
+$ ros2 launch mvsim launch_world.launch.py world_file:=ruta_a/aruco_test_world.xml 
+
+Para ejecutar algoritmo aruco:
+$ ros2 run aruco_ros single --ros-args \    
+-r /image:=/cam1/image_raw \     
+-r /camera_info:=/cam1/camera_info \
+-p marker_id:=0 \
+-p marker_size:=0.2 \
+-p reference_frame:=base_link \
+-p marker_frame:=aruco_detectado \
+-p image_is_rectified:=false \
+-p camera_frame:=cam1
+
+Para la aproximación se usa navegación basada en carril virtual: 
+Imaginarlo como una pista de aterrizaje que sale del código Aruco.
+
+Error Lateral ($e_y$): La distancia del robot a la línea central del carril. Queremos que sea 0.
+Error de Orientación ($e_\theta$): La diferencia de ángulo entre el robot y el carril. Queremos que sea 0 (paralelos).
+Distancia a la Meta ($e_x$): Cuánto falta para llegar al punto final.
+
