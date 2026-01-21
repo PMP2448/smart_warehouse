@@ -1,0 +1,14 @@
+package.xml
+setup.cfg
+setup.py
+resource/smart_warehouse
+smart_warehouse/__init__.py
+smart_warehouse/aruco_generator.py
+smart_warehouse/monitor_aruco.py
+smart_warehouse.egg-info/PKG-INFO
+smart_warehouse.egg-info/SOURCES.txt
+smart_warehouse.egg-info/dependency_links.txt
+smart_warehouse.egg-info/entry_points.txt
+smart_warehouse.egg-info/requires.txt
+smart_warehouse.egg-info/top_level.txt
+smart_warehouse.egg-info/zip-safe

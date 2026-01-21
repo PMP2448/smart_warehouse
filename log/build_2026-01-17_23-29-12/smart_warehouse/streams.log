@@ -1,0 +1,27 @@
+[1.964s] Invoking command in '/home/pmp/ros2_ws/src/smart_warehouse/build/smart_warehouse': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/pmp/ros2_ws/src/smart_warehouse/build/smart_warehouse/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/pmp/ros2_ws/src/smart_warehouse/install/smart_warehouse/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/pmp/ros2_ws/src/smart_warehouse/build/smart_warehouse/build --no-deps symlink_data
+[2.730s] running develop
+[3.151s] /usr/lib/python3/dist-packages/setuptools/command/easy_install.py:363: UserWarning: Unbuilt egg for pytest-repeat [unknown version] (/usr/lib/python3/dist-packages)
+[3.151s]   self.local_index = Environment(self.shadow_path + sys.path)
+[3.260s] running egg_info
+[3.260s] creating smart_warehouse.egg-info
+[3.305s] writing smart_warehouse.egg-info/PKG-INFO
+[3.305s] writing dependency_links to smart_warehouse.egg-info/dependency_links.txt
+[3.306s] writing entry points to smart_warehouse.egg-info/entry_points.txt
+[3.307s] writing requirements to smart_warehouse.egg-info/requires.txt
+[3.308s] writing top-level names to smart_warehouse.egg-info/top_level.txt
+[3.308s] writing manifest file 'smart_warehouse.egg-info/SOURCES.txt'
+[3.398s] reading manifest file 'smart_warehouse.egg-info/SOURCES.txt'
+[3.401s] writing manifest file 'smart_warehouse.egg-info/SOURCES.txt'
+[3.450s] running build_ext
+[3.451s] Creating /home/pmp/ros2_ws/src/smart_warehouse/install/smart_warehouse/lib/python3.12/site-packages/smart-warehouse.egg-link (link to .)
+[3.453s] Installing aruco_generator script to /home/pmp/ros2_ws/src/smart_warehouse/install/smart_warehouse/lib/smart_warehouse
+[3.455s] Installing monitor_aruco script to /home/pmp/ros2_ws/src/smart_warehouse/install/smart_warehouse/lib/smart_warehouse
+[3.456s] 
+[3.457s] Installed /home/pmp/ros2_ws/src/smart_warehouse/build/smart_warehouse
+[3.457s] running symlink_data
+[3.457s] creating /home/pmp/ros2_ws/src/smart_warehouse/install/smart_warehouse/share/ament_index
+[3.457s] creating /home/pmp/ros2_ws/src/smart_warehouse/install/smart_warehouse/share/ament_index/resource_index
+[3.458s] creating /home/pmp/ros2_ws/src/smart_warehouse/install/smart_warehouse/share/ament_index/resource_index/packages
+[3.458s] symbolically linking /home/pmp/ros2_ws/src/smart_warehouse/build/smart_warehouse/resource/smart_warehouse -> /home/pmp/ros2_ws/src/smart_warehouse/install/smart_warehouse/share/ament_index/resource_index/packages
+[3.458s] symbolically linking /home/pmp/ros2_ws/src/smart_warehouse/build/smart_warehouse/package.xml -> /home/pmp/ros2_ws/src/smart_warehouse/install/smart_warehouse/share/smart_warehouse
+[3.497s] Invoked command in '/home/pmp/ros2_ws/src/smart_warehouse/build/smart_warehouse' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/pmp/ros2_ws/src/smart_warehouse/build/smart_warehouse/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/pmp/ros2_ws/src/smart_warehouse/install/smart_warehouse/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/pmp/ros2_ws/src/smart_warehouse/build/smart_warehouse/build --no-deps symlink_data
