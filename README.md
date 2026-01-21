@@ -2,12 +2,14 @@
 
 ## Descripción
 
-**smart_warehouse** es un paquete ROS2 para la generación, monitoreo y gestión de marcadores ArUco en un almacén inteligente. Este proyecto incluye herramientas para:
+**smart_warehouse** es un paquete ROS2 para la automatización de almacenes mediante navegación autónoma de robots. El sistema integra:
 
-- **Generación de marcadores ArUco**: Crear y exportar marcadores de códigos visuales para el posicionamiento de robots
-- **Monitoreo de marcadores**: Detectar y rastrear marcadores en tiempo real a través de cámaras
-- **Docking con ArUco**: Facilitar el acoplamiento automático de robots utilizando marcadores como referencia
-- **Gestión de texturas y mundos de simulación**: Recursos para pruebas en Gazebo
+- **Navegación con Nav2**: Los robots utilizan rutas predefinidas y el route planner de Nav2 para desplazarse de forma autónoma por el almacén
+- **Posicionamiento preciso con ArUco**: Marcadores visuales para realizar aproximaciones precisas a las cargas que deben ser recogidas
+- **Generación y detección de marcadores**: Herramientas para crear, gestionar y detectar marcadores ArUco en tiempo real
+- **Simulación en MVSIM**: Recursos y mundos para validación del sistema en entorno virtual
+
+**Estado**: Proyecto en desarrollo 🚀
 
 ## Requisitos
 
