@@ -2,12 +2,13 @@
 
 ## Descripción
 
-**smart_warehouse** es un paquete ROS2 para la automatización de almacenes mediante navegación autónoma de robots. El sistema integra:
+**smart_warehouse** es un paquete ROS2 para un almacén automatizado. Los robots siguen rutas predefinidas con Nav2 para el desplazamiento grueso y usan marcadores ArUco para la aproximación fina a la carga. El objetivo actual es validar el flujo completo en MVSIM y dejarlo listo para hardware real.
 
-- **Navegación con Nav2**: Los robots utilizan rutas predefinidas y el route planner de Nav2 para desplazarse de forma autónoma por el almacén
-- **Posicionamiento preciso con ArUco**: Marcadores visuales para realizar aproximaciones precisas a las cargas que deben ser recogidas
-- **Generación y detección de marcadores**: Herramientas para crear, gestionar y detectar marcadores ArUco en tiempo real
-- **Simulación en MVSIM**: Recursos y mundos para validación del sistema en entorno virtual
+- **Navegación con Nav2**: Rutas predefinidas y planner de Nav2 para desplazamiento autónomo en el almacén.
+- **Aproximación fina con ArUco**: Marcadores como referencia final antes de recoger la carga.
+- **Herramientas ArUco**: Generación y detección de marcadores para pruebas y operación.
+- **Simulación en MVSIM**: Mundos y recursos para probar sin hardware.
+- **Mapas y rutas**: Mapas predefinidos y rutas almacenadas para configurar Nav2 según el layout del almacén.
 
 **Estado**: Proyecto en desarrollo 🚀
 
@@ -76,15 +77,25 @@ ros2 run smart_warehouse <nombre-del-nodo>
 
 ```
 smart_warehouse/
-├── aruco_generator.py       # Generador de marcadores ArUco
-├── monitor_aruco.py         # Monitor de marcadores
-├── docking_aruco.py         # Control de docking v1
-├── docking_aruco_v2.py      # Control de docking v2
-├── aruco_markers/           # Carpeta con marcadores generados
-├── aruco_textures/          # Texturas para simulación
-├── worlds/                  # Mundos de Gazebo
-└── package.xml              # Configuración del paquete ROS2
+├── aruco_markers/          # Marcadores generados
+├── aruco_textures/         # Texturas para simulación
+├── maps/                   # Mapas para Nav2 (layout del almacén)
+├── routes/                 # Rutas predefinidas para Nav2
+├── worlds/                 # Mundos MVSIM para simulación
+├── smart_warehouse/        # Código fuente del paquete
+│   ├── aruco_generator.py
+│   ├── monitor_aruco.py
+│   ├── docking_aruco.py
+│   └── docking_aruco_v2.py
+├── resource/               # Archivos de índice del paquete
+├── test/                   # Tests y linters
+├── package.xml             # Metadatos del paquete ROS2
+├── setup.py                # Setup del paquete (ament_python)
+├── setup.cfg               # Configuración de ament/flake8
+└── other/                  # Notas u otros recursos
 ```
+
+> Nota: los directorios `build/`, `install/` y `log/` los genera `colcon` y no se versionan.
 
 ## Licencia
 
