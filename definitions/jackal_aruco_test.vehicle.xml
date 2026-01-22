@@ -1,0 +1,70 @@
+<vehicle:class name="jackal">
+
+    <dynamics class="differential_4_wheels">
+        <lf_wheel pos="0.13  0.16" mass="1.0" width="0.03" diameter="0.20">
+          <visual> <model_uri>$(ros2 pkg prefix mvsim)/share/mvsim/models/jackal_description/jackal-wheel.dae</model_uri> </visual>
+        </lf_wheel>
+        <rf_wheel pos="0.13 -0.16" mass="1.0" width="0.03" diameter="0.20">
+          <visual> <model_uri>$(ros2 pkg prefix mvsim)/share/mvsim/models/jackal_description/jackal-wheel.dae</model_uri> </visual>
+        </rf_wheel>
+        <lr_wheel pos="-0.13  0.16" mass="1.0" width="0.03" diameter="0.20">
+          <visual> <model_uri>$(ros2 pkg prefix mvsim)/share/mvsim/models/jackal_description/jackal-wheel.dae</model_uri> </visual>
+        </lr_wheel>
+        <rr_wheel pos="-0.13 -0.16" mass="1.0" width="0.03" diameter="0.20">
+          <visual> <model_uri>$(ros2 pkg prefix mvsim)/share/mvsim/models/jackal_description/jackal-wheel.dae</model_uri> </visual>
+        </lr_wheel>
+
+        <chassis mass="10.0" zmin="0.05" zmax="0.25">
+            <shape_from_visual/> 
+        </chassis>
+
+        <controller class="twist_ideal" /> 
+    </dynamics>
+
+    <friction class="default">
+        <mu>0.8</mu>
+        <C_damping>0.05</C_damping>
+    </friction>
+
+    <visual>
+        <model_uri>$(ros2 pkg prefix mvsim)/share/mvsim/models/jackal_description/jackal.dae</model_uri>
+        <model_yaw>0.0</model_yaw>
+        <model_pitch>0.0</model_pitch>
+        <model_roll>90.0</model_roll>
+    </visual>
+
+    <if condition="${default_sensors|true}">
+      
+      <include file="$(ros2 pkg prefix mvsim)/share/mvsim/definitions/lidar2d.sensor.xml"
+        sensor_x="-0.15" sensor_z="0.25" sensor_yaw="180"
+        sensor_period_sec="0.10"
+        raytrace_3d="${lidar2d_raytrace|false}"
+        sensor_name="scanner1"
+      />
+
+      <include file="$(ros2 pkg prefix mvsim)/share/mvsim/definitions/helios-32-FOV-31.sensor.xml"
+        sensor_x="0.15" sensor_z="$f{0.27 + 0.08}"
+        sensor_std_noise="0.0025"
+        sensor_publish="false"
+        sensor_name="lidar1"
+        sensor_rate="10.0"
+        horz_resolution_factor="1.5"
+        vert_resolution_factor="1.0"
+      />
+
+      <include file="$(ros2 pkg prefix mvsim)/share/mvsim/definitions/camera.sensor.xml" 
+        sensor_name="aruco_cam"
+        sensor_x="0.2"  sensor_y="0" sensor_z="0.27"
+        ncols="1280"
+        nrows="720"
+        cx="640"
+        cy="360"
+        fx="800"
+        fy="800"
+        sensor_period_sec="0.01666667"
+        sensor_yaw="-90.0"
+        sensor_roll="-90.0"
+        />
+    </if>
+
+</vehicle:class>

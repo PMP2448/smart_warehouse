@@ -12,14 +12,13 @@
     <y_min>-10</y_min> <y_max>10</y_max>
   </element>
 
-  <element class="vertical_plane" name="mi_aruco_real">
-    <x0>3.0</x0> <y0> 0.1</y0> 
-    <x1>3.0</x1> <y1>-0.1</y1>
-    
-    <height>0.2</height>
-    <z>0.2</z> <texture>../aruco_textures/aruco_texture_id0.png</texture>
-    
-    <cull_face>BACK</cull_face>
+  <element class="vertical_plane" name="aruco_id0">
+      <x0>3.0</x0> <y0> 0.1667</y0> 
+      <x1>3.0</x1> <y1>-0.1667</y1>
+      <height>0.3333</height>
+      <z>0.2</z>
+      <texture>../aruco_textures/aruco_texture_id0.png</texture>
+      <cull_face>BACK</cull_face>
   </element>
 
   <block name="pared_fondo">
@@ -38,9 +37,10 @@
       <color>#DDDDDD</color> </visual>
   </block>
 
-  <include file="$(ros2 pkg prefix mvsim)/share/mvsim/definitions/jackal.vehicle.xml"/>
+
+  <include file="../definitions/jackal_aruco_test.vehicle.xml"/>
   <vehicle name="robot1" class="jackal">
-    <init_pose>-2 0 0</init_pose>  
+    <init_pose>-2 0 0.2</init_pose>  
     <init_vel>0 0 0</init_vel>
   </vehicle>
 
