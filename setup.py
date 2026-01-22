@@ -27,7 +27,8 @@ setup(
             'aruco_generator = smart_warehouse.aruco_generator:main',
             'monitor_aruco = smart_warehouse.monitor_aruco:main',
             'docking_aruco = smart_warehouse.docking_aruco:main',
-            'docking_aruco_v2 = smart_warehouse.docking_aruco_v2:main'
+            'docking_aruco_v2 = smart_warehouse.docking_aruco_v2:main',
+            'docking_aruco_v3 = smart_warehouse.docking_aruco_v3:main'
         ],
     },
 )

@@ -1,0 +1,100 @@
+<vehicle:class name="forklift">
+		<!-- Dynamical model: Diferencial (más simple y funcional) -->
+		<dynamics class="differential">
+			<!-- Ruedas -->
+			<l_wheel pos="0.0  0.416" mass="5.0" width="0.125" diameter="0.325" />
+			<r_wheel pos="0.0 -0.416" mass="5.0" width="0.125" diameter="0.325" />
+
+			<!-- Chasis con plataforma elevadora -->
+			<chassis mass="50.0" zmin="0.15" zmax="2.0">
+				<!-- Cuerpo principal del robot -->
+				<shape>
+					<pt>-1.0 -0.4</pt>
+					<pt>-1.0  0.4</pt>
+					<pt> 0.2  0.4</pt>
+					<pt> 0.2 -0.4</pt>
+				</shape>
+			</chassis>
+			
+			<!-- Plataforma de horquillas (actúa como elevador físico) -->
+			<!-- Esta rueda adicional en la parte delantera empuja objetos hacia arriba -->
+			<caster_wheel pos="1.0 0.0" mass="10.0" radius="0.15" />
+
+			<!-- Motor controller -->
+			<controller class="twist_ideal">
+				<max_torque>200</max_torque>
+			</controller>
+		</dynamics>
+
+		<!-- Friction -->
+		<friction class="default">
+			<mu>0.8</mu>
+			<C_damping>5</C_damping>
+		</friction>
+
+		<!-- Modelo visual del forklift -->
+		<visual>
+			<model_uri>https://mrpt.github.io/mvsim-models/pallet_jack.zip/pallet_jack/pallet_jack.dae</model_uri>
+			<model_roll>90.0</model_roll>
+			<model_scale>1.25</model_scale>
+		</visual>
+
+		<!-- ===== SENSORES ===== -->
+
+        <!-- Cámara para la detección de ARUCOs -->
+        <include file="$(ros2 pkg prefix mvsim)/share/mvsim/definitions/camera.sensor.xml" 
+            sensor_name="aruco_cam"
+            sensor_x="-0.25"  sensor_y="0" sensor_z="0.8"
+            ncols="1280"
+            nrows="720"
+            cx="640"
+            cy="360"
+            fx="800"
+            fy="800"
+            sensor_period_sec="0.01666667"
+            sensor_yaw="-90.0"
+            sensor_roll="-90.0"
+        />
+
+		<!-- LIDAR 2D 360° para SLAM/Mapping (montado arriba) -->
+		<sensor class="laser" name="scan">
+			<pose_3d>0 0 1.0 0 0 0</pose_3d>
+			<fov_degrees>360</fov_degrees>
+			<sensor_period>0.05</sensor_period>
+			<nrays>360</nrays>
+			<max_range>25.0</max_range>
+			<min_range>0.1</min_range>
+			<raytrace_3d>false</raytrace_3d>
+			<publish_topic>/scan</publish_topic>
+		</sensor>
+
+		<!-- LIDAR frontal corto alcance (detección obstáculos) -->
+		<sensor class="laser" name="front_proximity">
+			<pose_3d>1.0 0 0.4 0 0 0</pose_3d>
+			<fov_degrees>120</fov_degrees>
+			<sensor_period>0.05</sensor_period>
+			<nrays>60</nrays>
+			<max_range>5.0</max_range>
+			<min_range>0.05</min_range>
+			<raytrace_3d>false</raytrace_3d>
+			<publish_topic>/front_scan</publish_topic>
+		</sensor>
+
+		<!-- LIDAR trasero corto alcance (detección obstáculos) -->
+		<sensor class="laser" name="rear_proximity">
+			<pose_3d>-0.625 0 0.4 0 0 180</pose_3d>
+			<fov_degrees>120</fov_degrees>
+			<sensor_period>0.05</sensor_period>
+			<nrays>60</nrays>
+			<max_range>5.0</max_range>
+			<min_range>0.05</min_range>
+			<raytrace_3d>false</raytrace_3d>
+			<publish_topic>/rear_scan</publish_topic>
+		</sensor>
+
+		<!-- IMU -->
+		<sensor class="imu" name="imu">
+			<pose_3d>0 0 0.3 0 0 0</pose_3d>
+			<sensor_period>0.02</sensor_period>
+		</sensor>
+	</vehicle:class>
