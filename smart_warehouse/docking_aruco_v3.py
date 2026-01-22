@@ -37,15 +37,15 @@ class ArucoDocking(Node):
         self.declare_parameter('k_w_angle', 0.5)  # Ganancia corrección angular durante aproximación"""
 
         # Parámetros ajustados para el forklift
-        self.declare_parameter('target_dist', 1.0)      # Distancia final (m)
-        self.declare_parameter('pre_target_dist', 1.8)  # Distancia pre-aproximación (m)
+        self.declare_parameter('target_dist', 1.8)      # Distancia final (m)
+        self.declare_parameter('pre_target_dist', 3) # Distancia pre-aproximación (m)
         self.declare_parameter('tolerance_dist', 0.01)  # 1cm de margen en distancia
-        self.declare_parameter('max_v', 0.2)            # Max vel lineal 
+        self.declare_parameter('max_v', 0.3)            # Max vel lineal 
         self.declare_parameter('max_w', 1.0)            # Max vel angular (float)
-        self.declare_parameter('max_v2', 0.05)           # Velocidad de aproximación final
+        self.declare_parameter('max_v2', 0.1)           # Velocidad de aproximación final
         self.declare_parameter('max_w2', 1.0)           # Velocidad angular de aproximación final
-        self.declare_parameter('k_v', 0.4)              # Ganancia de corrección de de aproximación final
-        self.declare_parameter('k_w_lat', 0.3)          # Ganancia corrección lateral durante aproximación
+        self.declare_parameter('k_v', 0.2)              # Ganancia de corrección de de aproximación final
+        self.declare_parameter('k_w_lat', 0.4)          # Ganancia corrección lateral durante aproximación
         self.declare_parameter('k_w_angle', 0.3)        # Ganancia corrección angular durante aproximación
 
         self.target_z = self.get_parameter('target_dist').value
@@ -63,12 +63,12 @@ class ArucoDocking(Node):
         self.cmd_pub = self.create_publisher(Twist, '/cmd_vel', 10)
         
         # 4. LOOP DE CONTROL (TIMER 30Hz)
-        self.timer = self.create_timer(1/30, self.control_loop)
+        self.timer = self.create_timer(1/60, self.control_loop)
         
         # Variables internas
         self.state = ST_SEARCHING
         self.last_aruco_time = 0
-        self.get_logger().info("Docking Node Iniciado. Freq: 30Hz")
+        self.get_logger().info("Docking Node Iniciado. Freq: 60Hz")
 
     def quaternion_to_yaw(self, q):
         """Extrae la rotación del robot alrededor del eje Y (vertical).

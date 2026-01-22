@@ -43,5 +43,7 @@
     <init_pose>-2 0 0.2</init_pose>  
     <init_vel>0 0 0</init_vel>
   </vehicle>
+  <include file="../definitions/pallet.block.xml"/>
+  <block class="pallet" name="pallet_1"> <init_pose>2 0 0</init_pose> </block>
 
 </mvsim_world>

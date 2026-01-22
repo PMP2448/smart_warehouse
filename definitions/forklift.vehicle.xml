@@ -36,7 +36,7 @@
 		<visual>
 			<model_uri>https://mrpt.github.io/mvsim-models/pallet_jack.zip/pallet_jack/pallet_jack.dae</model_uri>
 			<model_roll>90.0</model_roll>
-			<model_scale>1.25</model_scale>
+			<model_scale>1</model_scale>
 		</visual>
 
 		<!-- ===== SENSORES ===== -->

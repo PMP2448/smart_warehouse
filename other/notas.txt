@@ -4,15 +4,8 @@ Para ejecutar mvsim:
 $ ros2 launch mvsim launch_world.launch.py world_file:=ruta_a/aruco_test_world.xml 
 
 Para ejecutar algoritmo aruco:
-$ ros2 run aruco_ros single --ros-args \    
--r /image:=/cam1/image_raw \     
--r /camera_info:=/cam1/camera_info \
--p marker_id:=0 \
--p marker_size:=0.2 \
--p reference_frame:=base_link \
--p marker_frame:=aruco_detectado \
--p image_is_rectified:=false \
--p camera_frame:=cam1
+$ ros2 run aruco_ros single --ros-args -r /image:=/aruco_cam/image_raw -r /camera_info:=/aruco_cam/camera_info -p marker_id:=0 -p marker_size:=0.3333 -p reference_frame:=base_link -p marker_frame:=aruco_detectado -p image_is_rectified:=false -p camera_frame:=aruco_cam -p use_sim_time:=true
+
 
 Para la aproximación se usa navegación basada en carril virtual: 
 Imaginarlo como una pista de aterrizaje que sale del código Aruco.

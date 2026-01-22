@@ -1,0 +1,11 @@
+<block:class name="pallet">
+    <mass>25</mass> <ground_friction>0.3</ground_friction>
+    <shape_from_visual/> <!-- automatic shape,zmin,zmax from 3D mesh-->
+    <!--  Custom visualization model. 3D model filename to load (local or remote http://uri ) -->
+    <visual>
+        <model_uri>https://mrpt.github.io/mvsim-models/pallet.zip/pallet/pallet.dae</model_uri>
+        <model_roll>90.0</model_roll>
+        <model_offset_z>0.08</model_offset_z>
+        <model_scale>1</model_scale>
+    </visual>
+</block:class>
