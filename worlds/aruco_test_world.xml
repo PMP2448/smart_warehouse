@@ -17,7 +17,7 @@
     <x1>3.0</x1> <y1>-0.1</y1>
     
     <height>0.2</height>
-    <z>0.1</z> <texture>../aruco_textures/aruco_texture_id0.png</texture>
+    <z>0.2</z> <texture>../aruco_textures/aruco_texture_id0.png</texture>
     
     <cull_face>BACK</cull_face>
   </element>
