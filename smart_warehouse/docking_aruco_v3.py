@@ -37,18 +37,18 @@ class ArucoDocking(Node):
         self.declare_parameter('k_w_angle', 0.5)  # Ganancia corrección angular durante aproximación"""
 
         # Parámetros ajustados para el forklift
-        self.declare_parameter('target_dist', 1.8)      # Distancia final (m)
-        self.declare_parameter('pre_target_dist', 2.2) # Distancia pre-aproximación (m)
+        self.declare_parameter('target_dist', 1.4)      # Distancia final (m)
+        self.declare_parameter('pre_target_dist', 2.0) # Distancia pre-aproximación (m)
         self.declare_parameter('tolerance_dist', 0.01)  # 1cm de margen en distancia
-        self.declare_parameter('tolerance_lat', 0.03)   # 3cm de margen lateral
+        self.declare_parameter('tolerance_lat', 0.04)   # 3cm de margen lateral
         self.declare_parameter('tolerance_yaw', math.radians(3.0)) # 3 grados de margen angular
         self.declare_parameter('max_v', 0.2)            # Max vel lineal 
         self.declare_parameter('max_w', 1.0)            # Max vel angular (float)
         self.declare_parameter('max_v2', 0.1)           # Velocidad de aproximación final
         self.declare_parameter('max_w2', 1.0)           # Velocidad angular de aproximación final
-        self.declare_parameter('k_v', 0.2)              # Ganancia de corrección de de aproximación final
-        self.declare_parameter('k_w_lat', 0.42)          # Ganancia corrección lateral durante aproximación
-        self.declare_parameter('k_w_angle', 0.42)        # Ganancia corrección angular durante aproximación
+        self.declare_parameter('k_v', 0.18)              # Ganancia de corrección de de aproximación final
+        self.declare_parameter('k_w_lat', 0.4)          # Ganancia corrección lateral durante aproximación
+        self.declare_parameter('k_w_angle', 0.4)        # Ganancia corrección angular durante aproximación
 
         self.target_z = self.get_parameter('target_dist').value
         self.pre_target_z = self.get_parameter('pre_target_dist').value

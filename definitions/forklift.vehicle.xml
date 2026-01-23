@@ -44,7 +44,7 @@
         <!-- Cámara para la detección de ARUCOs -->
         <include file="$(ros2 pkg prefix mvsim)/share/mvsim/definitions/camera.sensor.xml" 
             sensor_name="aruco_cam"
-            sensor_x="-0.25"  sensor_y="0" sensor_z="0.8"
+            sensor_x="-0.25"  sensor_y="-0.015" sensor_z="0.65"
             ncols="1280"
             nrows="720"
             cx="640"

@@ -1,25 +1,23 @@
+<!-- Definición de poste con ArUco -->
+<!-- Uso: <include file="../definitions/aruco_post.block.xml"/> -->
+<!--      <block name="aruco_post_1" class="aruco_post"> -->
+<!--        <init_pose>X Y 0</init_pose> -->
+<!--      </block> -->
+
 <block:class name="aruco_post">
-  <static>true</static>
-  <intangible>${intangible|true}</intangible>
-  <!-- Collision shape: keep simple box; set intangible=true to disable collisions -->
-  <geometry type="box" lx="${post_lx|0.08}" ly="${post_ly|0.08}" lz="${post_lz|1.2}"/>
-
+  <!-- Poste vertical (palo) -->
+  <shape>
+    <pt>-0.025 -0.025</pt>
+    <pt> 0.025 -0.025</pt>
+    <pt> 0.025  0.025</pt>
+    <pt>-0.025  0.025</pt>
+    <height>0.6</height>
+  </shape>
+  
+  <mass>1000</mass>
+  
   <visual>
-    <geometry type="box" lx="${post_lx|0.08}" ly="${post_ly|0.08}" lz="${post_lz|1.2}"/>
-    <color>#606060</color>
-  </visual>
-
-  <visual>
-    <geometry type="box" lx="${plate_lx|0.22}" ly="${plate_ly|0.22}" lz="${plate_lz|0.02}"/>
-    <offset_z>${post_lz|1.2}</offset_z>
-    <color>#808080</color>
-  </visual>
-
-  <visual>
-    <!-- Thin vertical panel sized like the reference vertical_plane -->
-    <geometry type="box" lx="${marker_thickness|0.01}" ly="${marker_size|0.3333}" lz="${marker_size|0.3333}"/>
-    <offset_z>${marker_offset_z|1.22}</offset_z>
-    <color>#ffffff</color>
-    <texture>${texture_uri|../aruco_textures/aruco_texture_id0.png}</texture>
+    <color>#444444</color>
   </visual>
 </block:class>
+

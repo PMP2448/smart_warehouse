@@ -12,31 +12,20 @@
     <y_min>-10</y_min> <y_max>10</y_max>
   </element>
 
+
+
   <element class="vertical_plane" name="aruco_id0">
       <x0>3.0</x0> <y0> 0.1667</y0> 
       <x1>3.0</x1> <y1>-0.1667</y1>
       <height>0.3333</height>
-      <z>0.6</z>
+      <z>0.45</z>
       <texture>../aruco_textures/aruco_texture_id0.png</texture>
       <cull_face>BACK</cull_face>
   </element>
-
-  <block name="pared_fondo">
-    <init_pose>3.11 0 0 0 0 0</init_pose>
-    
-    <shape>
-      <pt>-0.10 -1.5</pt>
-      <pt> 0.10 -1.5</pt>
-      <pt> 0.10  1.5</pt>
-      <pt>-0.10  1.5</pt>
-      
-      <height>2.0</height>
-    </shape>
-    
-    <mass>1000</mass> <visual>
-      <color>#DDDDDD</color> </visual>
+  <include file="../definitions/aruco_post.block.xml"/>
+  <block name="post" class="aruco_post">
+    <init_pose>3 0 0</init_pose>
   </block>
-
 
   <include file="../definitions/forklift.vehicle.xml"/>
   <vehicle name="robot1" class="forklift">
@@ -44,6 +33,6 @@
     <init_vel>0 0 0</init_vel>
   </vehicle>
   <include file="../definitions/pallet.block.xml"/>
-  <block class="pallet" name="pallet_1"> <init_pose>2 0 0</init_pose> </block>
+  <block class="pallet" name="pallet_1"> <init_pose>2.6 0 0</init_pose> </block>
 
 </mvsim_world>

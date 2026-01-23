@@ -1,0 +1,34 @@
+<mvsim_world version="1.0">
+  <simul_timestep>0.005</simul_timestep> 
+  <gui> 
+    <refresh_rate_ms>50</refresh_rate_ms> 
+    <ortho>false</ortho> 
+    <show_forces>false</show_forces>
+  </gui>
+    <element class="ground_grid">
+        <floating>false</floating>
+        <x_min>-10</x_min> <x_max>10</x_max>
+        <y_min>-10</y_min> <y_max>10</y_max>
+    </element>
+
+    <include file="../definitions/aruco_post.block.xml"/>
+    <block name="post" class="aruco_post">
+        <init_pose>3 0 0</init_pose>
+    </block>
+    <element class="vertical_plane" name="aruco_id0">
+        <x0>2.975</x0> <y0> 0.1667</y0> 
+        <x1>2.975</x1> <y1>-0.1667</y1>
+        <height>0.3333</height>
+        <z>0.45</z>
+        <texture>../aruco_textures/aruco_texture_id0.png</texture>
+        <cull_face>BACK</cull_face>
+    </element>
+
+    <include file="../definitions/forklift.vehicle.xml"/>
+    <vehicle name="robot1" class="forklift">
+        <init_pose>-2 0 0.2</init_pose>  
+        <init_vel>0 0 0</init_vel>
+    </vehicle>
+
+
+</mvsim_world>
