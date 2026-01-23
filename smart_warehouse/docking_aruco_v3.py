@@ -46,7 +46,7 @@ class ArucoDocking(Node):
         self.declare_parameter('max_w', 1.0)            # Max vel angular (float)
         self.declare_parameter('max_v2', 0.1)           # Velocidad de aproximación final
         self.declare_parameter('max_w2', 1.0)           # Velocidad angular de aproximación final
-        self.declare_parameter('k_v', 0.15)              # Ganancia de corrección de de aproximación final
+        self.declare_parameter('k_v', 0.2)              # Ganancia de corrección de de aproximación final
         self.declare_parameter('k_w_lat', 0.42)          # Ganancia corrección lateral durante aproximación
         self.declare_parameter('k_w_angle', 0.42)        # Ganancia corrección angular durante aproximación
 

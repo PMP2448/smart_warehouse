@@ -72,7 +72,7 @@ class ArucoSmoothFilter(Node):
         super().__init__('aruco_pose_filter')
         
         # 1. PARÁMETROS DE FILTRADO
-        self.declare_parameter('window_size', 50)  # Tamaño de la ventana de media móvil
+        self.declare_parameter('window_size', 20)  # Tamaño de la ventana de media móvil
         self.declare_parameter('input_topic', '/aruco_single/pose')
         self.declare_parameter('output_frame', 'aruco_detectado_filtered')
         self.declare_parameter('world_frame', 'map')  # Frame fijo del mundo
