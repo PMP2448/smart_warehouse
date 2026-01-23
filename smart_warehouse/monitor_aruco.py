@@ -49,7 +49,7 @@ class TFMonitor(Node):
         # TRANSFORMACIÓN: Posición del ROBOT respecto al ARUCO
         # Queremos saber el error de posición y orientación del robot
         # en el sistema de coordenadas del ArUco
-        from_frame = 'aruco_detectado'  # Sistema de referencia: ArUco
+        from_frame = 'aruco_detectado_filtered'  # Sistema de referencia: ArUco
         to_frame   = 'base_link'         # Lo que medimos: Robot
 
         try:

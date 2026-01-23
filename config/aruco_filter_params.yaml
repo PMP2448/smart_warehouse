@@ -1,0 +1,20 @@
+# Configuración del Filtro de Outliers del ArUco TF
+# Uso: ros2 run smart_warehouse aruco_pose_filter --ros-args --params-file config/aruco_filter_params.yaml
+
+aruco_pose_filter:
+  ros__parameters:
+    # Tamaño de la ventana para estadísticas
+    window_size: 5
+    
+    # Cambio máximo permitido entre frames
+    max_rotation_change: 0.349  # ~20 grados en radianes
+    max_position_change: 0.3    # 30 cm
+    
+    # Umbral de desviación estándar (Z-score)
+    rotation_sigma_threshold: 3.0
+    position_sigma_threshold: 3.0
+    
+    # Frames TF
+    input_frame: 'aruco_detectado'           # Frame original del ArUco
+    output_frame: 'aruco_detectado_filtered' # Frame filtrado (output)
+    parent_frame: 'base_link'                # Frame padre del ArUco

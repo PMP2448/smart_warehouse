@@ -38,19 +38,23 @@ class ArucoDocking(Node):
 
         # Parámetros ajustados para el forklift
         self.declare_parameter('target_dist', 1.8)      # Distancia final (m)
-        self.declare_parameter('pre_target_dist', 3) # Distancia pre-aproximación (m)
+        self.declare_parameter('pre_target_dist', 2.2) # Distancia pre-aproximación (m)
         self.declare_parameter('tolerance_dist', 0.01)  # 1cm de margen en distancia
-        self.declare_parameter('max_v', 0.3)            # Max vel lineal 
+        self.declare_parameter('tolerance_lat', 0.03)   # 3cm de margen lateral
+        self.declare_parameter('tolerance_yaw', math.radians(3.0)) # 3 grados de margen angular
+        self.declare_parameter('max_v', 0.2)            # Max vel lineal 
         self.declare_parameter('max_w', 1.0)            # Max vel angular (float)
         self.declare_parameter('max_v2', 0.1)           # Velocidad de aproximación final
         self.declare_parameter('max_w2', 1.0)           # Velocidad angular de aproximación final
-        self.declare_parameter('k_v', 0.2)              # Ganancia de corrección de de aproximación final
-        self.declare_parameter('k_w_lat', 0.4)          # Ganancia corrección lateral durante aproximación
-        self.declare_parameter('k_w_angle', 0.3)        # Ganancia corrección angular durante aproximación
+        self.declare_parameter('k_v', 0.15)              # Ganancia de corrección de de aproximación final
+        self.declare_parameter('k_w_lat', 0.42)          # Ganancia corrección lateral durante aproximación
+        self.declare_parameter('k_w_angle', 0.42)        # Ganancia corrección angular durante aproximación
 
         self.target_z = self.get_parameter('target_dist').value
         self.pre_target_z = self.get_parameter('pre_target_dist').value
         self.tolerance_dist = self.get_parameter('tolerance_dist').value
+        self.tolerance_lat = self.get_parameter('tolerance_lat').value
+        self.tolerance_yaw = self.get_parameter('tolerance_yaw').value
         self.k_v = self.get_parameter('k_v').value
         self.k_w_lat = self.get_parameter('k_w_lat').value
         self.k_w_angle = self.get_parameter('k_w_angle').value
@@ -81,7 +85,7 @@ class ArucoDocking(Node):
         # TRANSFORMACIÓN: Posición del ROBOT respecto al ARUCO
         # Queremos saber el error de posición y orientación del robot
         # en el sistema de coordenadas del ArUco
-        from_frame = 'aruco_detectado'  # Sistema de referencia: ArUco
+        from_frame = 'aruco_detectado_filtered'  # Sistema de referencia: ArUco
         to_frame   = 'base_link'         # Lo que medimos: Robot
 
         try:
@@ -146,17 +150,17 @@ class ArucoDocking(Node):
             dist_error = rz - self.pre_target_z
             lat_error = rx
             angle_error = ryaw
-            
-            # Velocidad lineal proporcional a distancia
-            v = self.k_v * dist_error
-            
-            # Velocidad angular: combina corrección lateral y angular
-            # Corrección lateral: si estoy a la derecha (rx > 0), giro izquierda (w > 0)
-            # Corrección angular: si apunto derecha (ryaw > 0), giro izquierda (w < 0)
+
+            # Caso concreto que da error
+            if (lat_error > 0.2 and ryaw < 0) or (lat_error < -0.2 and ryaw > 0): # Apuntando hacia el lado contrario al aruco
+                v = 0.0
+            else:
+                v = self.k_v * dist_error
+
             w = self.k_w_lat * lat_error - self.k_w_angle * angle_error
 
             # Condición de éxito: llegar a distancia objetivo con errores mínimos
-            if abs(dist_error) < self.tolerance_dist:
+            if abs(dist_error) < self.tolerance_dist and abs(lat_error) < self.tolerance_lat and abs(angle_error) < self.tolerance_yaw:
                 self.get_logger().info("Aproximación inicial completada.")
                 self.state = ST_APPROACHING_FINAL
                 v = 0.0
@@ -173,8 +177,8 @@ class ArucoDocking(Node):
             angle_error = ryaw
             
             # Velocidad lineal proporcional a distancia
-            v = self.k_v * dist_error
-            
+            #v = self.k_v * dist_error 
+            v = 0.2 * dist_error
             # Velocidad angular: combina corrección lateral y angular
             w = self.k_w_lat * lat_error - self.k_w_angle * angle_error
 

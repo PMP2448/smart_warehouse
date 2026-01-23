@@ -26,16 +26,16 @@ class ArucoDocking(Node):
         super().__init__('aruco_docking')
 
         # 1. PARÁMETROS (Ajustables desde terminal)
-        self.declare_parameter('target_dist', 0.5)     # Distancia final (m)
-        self.declare_parameter('pre_target_dist', 1.5) # Lateral final (m)
+        self.declare_parameter('target_dist', 1.8)     # Distancia final (m)
+        self.declare_parameter('pre_target_dist', 2.3) # Lateral final (m)
         self.declare_parameter('tolerance_dist', 0.02) # 2cm de margen en distancia
         self.declare_parameter('tolerance_lat', 0.04)  # 4cm de margen lateral
         self.declare_parameter('tolerance_yaw', 3)     # ~3 grados de margen
         self.declare_parameter('max_v', 0.2)           # Max vel lineal 
         self.declare_parameter('max_w', 4.0)           # Max vel angular (float)
-        self.declare_parameter('k_v', 0.5)  # Velocidad de aproximación final
-        self.declare_parameter('k_w', 0.4)  # Velocidad angular de alineamiento
-        self.declare_parameter('aligning_angle', 45)  # Hz del loop de control
+        self.declare_parameter('k_v', 0.3)  # Velocidad de aproximación final
+        self.declare_parameter('k_w', 0.3)  # Velocidad angular de alineamiento
+        self.declare_parameter('aligning_angle', 30)  # Hz del loop de control
 
         self.target_z = self.get_parameter('target_dist').value
         self.pre_target_z = self.get_parameter('pre_target_dist').value
@@ -44,7 +44,7 @@ class ArucoDocking(Node):
         self.tol_yaw  = self.get_parameter('tolerance_yaw').value
         self.k_v = self.get_parameter('k_v').value
         self.k_w = self.get_parameter('k_w').value
-        self.aligning_angle = 30  # Grados para alineamiento inicial
+        self.aligning_angle = self.get_parameter('aligning_angle').value  # Grados para alineamiento inicial
 
         # 2. CONFIGURACIÓN TF (LECTURA)
         self.tf_buffer = Buffer()
@@ -72,7 +72,7 @@ class ArucoDocking(Node):
         # TRANSFORMACIÓN: Posición del ROBOT respecto al ARUCO
         # Queremos saber el error de posición y orientación del robot
         # en el sistema de coordenadas del ArUco
-        from_frame = 'aruco_detectado'  # Sistema de referencia: ArUco
+        from_frame = 'aruco_detectado_filtered'  # Sistema de referencia: ArUco
         to_frame   = 'base_link'         # Lo que medimos: Robot
 
         try:
