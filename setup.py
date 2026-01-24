@@ -1,3 +1,5 @@
+import os
+from glob import glob
 from setuptools import find_packages, setup
 
 package_name = 'smart_warehouse'
@@ -10,6 +12,15 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        (os.path.join('share', package_name, 'launch'), glob('launch/*.launch.py')),
+        (os.path.join('share', package_name, 'config'), glob('config/*.yaml')),
+        (os.path.join('share', package_name, 'worlds'), glob('worlds/*.xml')),
+        (os.path.join('share', package_name, 'definitions'), glob('definitions/*.xml')),
+        (os.path.join('share', package_name, 'rviz_configs'), glob('rviz_configs/*.rviz')),
+        (os.path.join('share', package_name, 'aruco_textures'), glob('aruco_textures/*.png')),
+        (os.path.join('share', package_name, 'maps'), glob('maps/*')),
+        (os.path.join('share', package_name, 'templates'), glob('templates/*')),
+        (os.path.join('share', package_name, 'graphs'), glob('graphs/*.geojson')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -28,10 +39,12 @@ setup(
             'monitor_aruco = smart_warehouse.monitor_aruco:main',
             'aruco_pose_filter = smart_warehouse.aruco_pose_filter:main',
             'docking_aruco = smart_warehouse.docking_aruco:main',
-            'docking_aruco_v2 = smart_warehouse.docking_aruco_v2:main',
-            'docking_aruco_v3 = smart_warehouse.docking_aruco_v3:main',
-            'docking_aruco_v4 = smart_warehouse.docking_aruco_v4:main',
-            'docking_aruco_v4_filtered = smart_warehouse.docking_aruco_v4_filtered:main',
+            'graph_editor = smart_warehouse.graph_editor:main',
+            'graph_visualizer = smart_warehouse.graph_visualizer:main',
+            'interface_node = smart_warehouse.interface_node:main',
+            'lift_controller = smart_warehouse.lift_controller:main',
+            'waypoint_follower = smart_warehouse.waypoint_follower:main',
+            'pallet_visual_servoing = smart_warehouse.pallet_visual_servoing:main'
         ],
     },
 )

@@ -96,7 +96,7 @@
 	<!-- Robot forklift -->
 	<include file="../definitions/forklift.vehicle.xml"/>
 	<vehicle name="robot1" class="forklift">
-		<init_pose>-13 11 0</init_pose>
+		<init_pose>-13.40 11.50 0</init_pose>
 	</vehicle>
 
 	<!-- ArUco post -->

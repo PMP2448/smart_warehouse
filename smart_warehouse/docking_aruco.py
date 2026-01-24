@@ -8,9 +8,6 @@ import sys
 
 # --- CONSTANTES DE ESTADO ---
 ST_SEARCHING         = 0 # Buscando ArUco
-ST_ALIGNING_ANGLE       = 1 # Alineando con 30º respecto a carril de aproximación
-ST_ALIGNING_LAT      = 2 # Alineando lateralmente con carril de aproximación
-ST_ALIGNING_0        = 3 # Alineando orientación a 0º respecto al carril
 ST_APPROACHING       = 4 # Aproximación inicial
 ST_APPROACHING_FINAL = 5 # Aproximándose a pose final
 ST_FINISHED          = 6 # Aproximación finalizada
@@ -26,25 +23,41 @@ class ArucoDocking(Node):
         super().__init__('aruco_docking')
 
         # 1. PARÁMETROS (Ajustables desde terminal)
-        self.declare_parameter('target_dist', 1.8)     # Distancia final (m)
-        self.declare_parameter('pre_target_dist', 2.3) # Lateral final (m)
-        self.declare_parameter('tolerance_dist', 0.02) # 2cm de margen en distancia
-        self.declare_parameter('tolerance_lat', 0.04)  # 4cm de margen lateral
-        self.declare_parameter('tolerance_yaw', 3)     # ~3 grados de margen
+
+        # Parámetros ajustados para el jackal
+        """self.declare_parameter('target_dist', 1.0)     # Distancia final (m)
+        self.declare_parameter('pre_target_dist', 1.8) # Distancia pre-aproximación (m)
+        self.declare_parameter('tolerance_dist', 0.01) # 1cm de margen en distancia
         self.declare_parameter('max_v', 0.2)           # Max vel lineal 
         self.declare_parameter('max_w', 4.0)           # Max vel angular (float)
-        self.declare_parameter('k_v', 0.3)  # Velocidad de aproximación final
-        self.declare_parameter('k_w', 0.3)  # Velocidad angular de alineamiento
-        self.declare_parameter('aligning_angle', 30)  # Hz del loop de control
+        self.declare_parameter('max_v2', 0.1)  # Velocidad de aproximación final
+        self.declare_parameter('max_w2', 2.0)  # Velocidad angular de aproximación final
+        self.declare_parameter('k_v', 0.4)      # Ganancia de corrección de de aproximación final
+        self.declare_parameter('k_w_lat', 0.4)  # Ganancia corrección lateral durante aproximación
+        self.declare_parameter('k_w_angle', 0.5)  # Ganancia corrección angular durante aproximación"""
+
+        # Parámetros ajustados para el forklift
+        self.declare_parameter('target_dist', 1.4)      # Distancia final (m)
+        self.declare_parameter('pre_target_dist', 2.0) # Distancia pre-aproximación (m)
+        self.declare_parameter('tolerance_dist', 0.01)  # 1cm de margen en distancia
+        self.declare_parameter('tolerance_lat', 0.04)   # 3cm de margen lateral
+        self.declare_parameter('tolerance_yaw', math.radians(3.0)) # 3 grados de margen angular
+        self.declare_parameter('max_v', 0.2)            # Max vel lineal 
+        self.declare_parameter('max_w', 1.0)            # Max vel angular (float)
+        self.declare_parameter('max_v2', 0.1)           # Velocidad de aproximación final
+        self.declare_parameter('max_w2', 1.0)           # Velocidad angular de aproximación final
+        self.declare_parameter('k_v', 0.18)              # Ganancia de corrección de de aproximación final
+        self.declare_parameter('k_w_lat', 0.4)          # Ganancia corrección lateral durante aproximación
+        self.declare_parameter('k_w_angle', 0.4)        # Ganancia corrección angular durante aproximación
 
         self.target_z = self.get_parameter('target_dist').value
         self.pre_target_z = self.get_parameter('pre_target_dist').value
         self.tolerance_dist = self.get_parameter('tolerance_dist').value
-        self.tol_lat  = self.get_parameter('tolerance_lat').value
-        self.tol_yaw  = self.get_parameter('tolerance_yaw').value
+        self.tolerance_lat = self.get_parameter('tolerance_lat').value
+        self.tolerance_yaw = self.get_parameter('tolerance_yaw').value
         self.k_v = self.get_parameter('k_v').value
-        self.k_w = self.get_parameter('k_w').value
-        self.aligning_angle = self.get_parameter('aligning_angle').value  # Grados para alineamiento inicial
+        self.k_w_lat = self.get_parameter('k_w_lat').value
+        self.k_w_angle = self.get_parameter('k_w_angle').value
 
         # 2. CONFIGURACIÓN TF (LECTURA)
         self.tf_buffer = Buffer()
@@ -53,13 +66,13 @@ class ArucoDocking(Node):
         # 3. CONTROL (ESCRITURA)
         self.cmd_pub = self.create_publisher(Twist, '/cmd_vel', 10)
         
-        # 4. LOOP DE CONTROL (TIMER 20Hz)
-        self.timer = self.create_timer(0.05, self.control_loop)
+        # 4. LOOP DE CONTROL (TIMER 30Hz)
+        self.timer = self.create_timer(1/60, self.control_loop)
         
         # Variables internas
         self.state = ST_SEARCHING
         self.last_aruco_time = 0
-        self.get_logger().info("Docking Node Iniciado. Freq: 20Hz")
+        self.get_logger().info("Docking Node Iniciado. Freq: 60Hz")
 
     def quaternion_to_yaw(self, q):
         """Extrae la rotación del robot alrededor del eje Y (vertical).
@@ -96,7 +109,7 @@ class ArucoDocking(Node):
 
             # IMPRIMIR errores de posición y orientación
             sys.stdout.write("\033[K") 
-            print(f"\r📍 Error Robot vs ArUco | X (lateral): {error_x:+6.3f}m | Z (profundidad): {error_z:6.3f}m | Rotación: {yaw_deg:+6.1f}°", end="")
+            # print(f"\r📍 Error Robot vs ArUco | X (lateral): {error_x:+6.3f}m | Z (profundidad): {error_z:6.3f}m | Rotación: {yaw_deg:+6.1f}°", end="")
             return error_x, error_z, yaw_rad
 
         except TransformException as ex:
@@ -120,89 +133,64 @@ class ArucoDocking(Node):
             self.cmd_pub.publish(Twist())
             return
 
-        # Desempaquetar datos validos
-        # x = Error Lateral (queremos 0)
-        # z = Distancia (queremos target_z)
-        # yaw = Error Angulo (queremos 0, asumiendo robot y aruco alineados)
-        rx, rz, ryaw = data 
+        # Desempaquetar datos
+        rx, rz, ryaw = data
+        
+        print(f"\r📍 Error Robot vs ArUco | X (lateral): {rx:+6.3f}m | Z (profundidad): {rz:6.3f}m | Rotación: {math.degrees(ryaw):+6.1f}°", end="")
 
         # --- LÓGICA DE ESTADOS ---
         
         if self.state == ST_SEARCHING:
             self.get_logger().info("ArUco Encontrado. Iniciando Alineamiento.")
-            self.state = ST_ALIGNING_ANGLE
-
-        elif self.state == ST_ALIGNING_ANGLE:
-            # FASE 1: Alineamiento inicial con +-30º respecto al carril
-            # Si el robot se situa a la izquierda del carril, debe alinear -30º
-            # Si el robot se situa a la derecha del carril, debe alinear +30º
-            if rx < 0:
-                target_yaw = math.radians(-self.aligning_angle)
-            else:
-                target_yaw = math.radians(self.aligning_angle)
-            
-            yaw_error = ryaw - target_yaw
-            w = -self.k_w * yaw_error # Control Proporcional
-
-            if abs(yaw_error) < math.radians(self.tol_yaw):
-                self.get_logger().info("Alineamiento 30º completado.")
-                self.state = ST_ALIGNING_LAT
-                w = 0.0
-
-            cmd.angular.z = w
-            cmd.linear.x = 0.0
-
-        elif self.state == ST_ALIGNING_LAT:
-            # FASE 2: Alineamiento lateral con carril de aproximación
-            lat_error = rx
-            v = abs(self.k_v * lat_error)  # Control Proporcional
-
-            if abs(lat_error) < self.tol_lat:
-                self.get_logger().info("Alineamiento lateral completado.")
-                self.state = ST_ALIGNING_0
-                v = 0.0
-
-            cmd.angular.z = 0.0
-            cmd.linear.x = v
-
-        elif self.state == ST_ALIGNING_0:
-            # FASE 3: Alineamiento angular a 0º respecto al carril
-            yaw_error = ryaw
-            w = -self.k_w * yaw_error  # Control Proporcional
-
-            if abs(yaw_error) < math.radians(self.tol_yaw):
-                self.get_logger().info("Alineamiento 0º completado.")
-                self.state = ST_APPROACHING
-                w = 0.0
-
-            cmd.angular.z = w
-            cmd.linear.x = 0.0
+            self.state = ST_APPROACHING
 
         elif self.state == ST_APPROACHING:
             # FASE 4: Aproximación inicial hasta pre_target_z
+            # Control coordinado: velocidad lineal + corrección lateral + corrección angular
             dist_error = rz - self.pre_target_z
-            v = self.k_v * dist_error  # Control Proporcional
+            lat_error = rx
+            angle_error = ryaw
 
-            if abs(dist_error) < self.tolerance_dist:
+            # Caso concreto que da error
+            if (lat_error > 0.2 and ryaw < 0) or (lat_error < -0.2 and ryaw > 0): # Apuntando hacia el lado contrario al aruco
+                v = 0.0
+            else:
+                v = self.k_v * dist_error
+
+            w = self.k_w_lat * lat_error - self.k_w_angle * angle_error
+
+            # Condición de éxito: llegar a distancia objetivo con errores mínimos
+            if abs(dist_error) < self.tolerance_dist and abs(lat_error) < self.tolerance_lat and abs(angle_error) < self.tolerance_yaw:
                 self.get_logger().info("Aproximación inicial completada.")
                 self.state = ST_APPROACHING_FINAL
                 v = 0.0
+                w = 0.0
 
             cmd.linear.x = v
-            cmd.angular.z = 0.0
+            cmd.angular.z = w
         
         elif self.state == ST_APPROACHING_FINAL:
             # FASE 5: Aproximación final hasta target_z
+            # Control coordinado más fino para la aproximación final
             dist_error = rz - self.target_z
-            v = self.k_v * dist_error  # Control Proporcional
+            lat_error = rx
+            angle_error = ryaw
+            
+            # Velocidad lineal proporcional a distancia
+            #v = self.k_v * dist_error 
+            v = 0.2 * dist_error
+            # Velocidad angular: combina corrección lateral y angular
+            w = self.k_w_lat * lat_error - self.k_w_angle * angle_error
 
+            # Condición de éxito: llegar a distancia objetivo con errores mínimos
             if abs(dist_error) < self.tolerance_dist:
                 self.get_logger().info("Aproximación final completada. Docking terminado.")
                 self.state = ST_FINISHED
                 v = 0.0
+                w = 0.0
 
             cmd.linear.x = v
-            cmd.angular.z = 0.0
+            cmd.angular.z = w
 
         elif self.state == ST_FINISHED:
             cmd.linear.x = 0.0
