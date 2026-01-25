@@ -155,11 +155,6 @@ class ControlPanel:
             print(f"Error loading graph: {e}")
             self.posibles_ubicaciones = ["HOME", "ESTANTERIA_1", "ESTANTERIA_2"] # Fallback
 
-        # Filtro: Solo pallets (Px) para misiones
-        self.posibles_pallets = [loc for loc in self.posibles_ubicaciones if loc.startswith('P')]
-        if not self.posibles_pallets:
-             self.posibles_pallets = ["P_UNKNOWN"]
-
         # --- GUI ELEMENTS ---
         lbl_title = tk.Label(root, text="CONTROL DE MISIÓN", font=font_title, bg=self.COLOR_BG, fg=self.COLOR_ACCENT)
         lbl_title.pack(pady=(30, 20)) 
@@ -173,19 +168,15 @@ class ControlPanel:
 
         # Origen
         tk.Label(frame_inputs, text="Origen (ID_LOC1):", font=font_label, bg=self.COLOR_BG, fg=self.COLOR_TEXT).grid(row=0, column=0, padx=10, pady=10, sticky="e")
-        self.combo_origin = ttk.Combobox(frame_inputs, values=self.posibles_pallets, font=font_input, width=20, state="readonly")
+        self.combo_origin = ttk.Combobox(frame_inputs, values=self.posibles_ubicaciones, font=font_input, width=20, state="readonly")
         self.combo_origin.grid(row=0, column=1, padx=10, pady=10)
-        if self.posibles_pallets:
-            self.combo_origin.current(0) 
+        self.combo_origin.current(0) 
 
         # Destino
         tk.Label(frame_inputs, text="Destino (ID_LOC2):", font=font_label, bg=self.COLOR_BG, fg=self.COLOR_TEXT).grid(row=1, column=0, padx=10, pady=10, sticky="e")
-        self.combo_target = ttk.Combobox(frame_inputs, values=self.posibles_pallets, font=font_input, width=20, state="readonly")
+        self.combo_target = ttk.Combobox(frame_inputs, values=self.posibles_ubicaciones, font=font_input, width=20, state="readonly")
         self.combo_target.grid(row=1, column=1, padx=10, pady=10)
-        if len(self.posibles_pallets) > 1:
-            self.combo_target.current(1)
-        elif self.posibles_pallets:
-            self.combo_target.current(0) 
+        self.combo_target.current(1) 
 
         # Boton Start
         self.btn_start = tk.Button(root, text="INICIAR TAREA", command=self.start_mission, 
@@ -305,12 +296,12 @@ class ControlPanel:
             self.publicar_mensaje("navigation_goal", self.current_origin)
             
         elif self.mission_phase == 2:
-            # Phase 2: Approach Origin (Blind)
-            self.lbl_current_state.config(text="APROXIMANDO...", fg="#a855f7")
-            self.publicar_mensaje("estado", "FASE 2: Aproximación Ciega")
-            self.publicar_mensaje("navegacion", "STATUS: OFF") # Ensure Nav is OFF
-            # Move forward 0.5 m/s for 3 seconds (~1.5m)
-            self.perform_blind_move(0.5, 900)
+            # Phase 2: Approach Origin (ArUco Docking)
+            self.lbl_current_state.config(text=f"DOCKING -> {self.current_origin}", fg="#a855f7")
+            self.publicar_mensaje("estado", "FASE 2: Docking ArUco")
+            self.publicar_mensaje("navegacion", "STATUS: OFF")
+            # Trigger Docking
+            self.publicar_mensaje("docking_trigger", f"START:{self.current_origin}")
             
         elif self.mission_phase == 3:
             # Phase 3: Pick
@@ -345,12 +336,12 @@ class ControlPanel:
             self.publicar_mensaje("navigation_goal", self.current_target)
             
         elif self.mission_phase == 6:
-            # Phase 6: Approach Target (Blind)
-            self.lbl_current_state.config(text="APROXIMANDO...", fg="#a855f7")
-            self.publicar_mensaje("estado", "FASE 6: Aproximación Ciega")
+            # Phase 6: Approach Target (ArUco Docking)
+            self.lbl_current_state.config(text=f"DOCKING -> {self.current_target}", fg="#a855f7")
+            self.publicar_mensaje("estado", "FASE 6: Docking ArUco")
             self.publicar_mensaje("navegacion", "STATUS: OFF")
-            # Move forward 0.5 m/s for 3 seconds (~1.5m)
-            self.perform_blind_move(0.5, 1000)
+            # Trigger Docking
+            self.publicar_mensaje("docking_trigger", f"START:{self.current_target}")
             
         elif self.mission_phase == 7:
             # Phase 7: Drop
@@ -405,13 +396,13 @@ class ControlPanel:
                 # Guardamos el nodo anterior al llegar al origen
                 self.origin_previous_node = self.ros_node.last_previous_node
                 self.log_message(f"📍 Nodo anterior origen: {self.origin_previous_node}")
-                self.log_message("✅ Llegado a Origen. Avanzando...")
+                self.log_message("✅ Llegado a Origen. Iniciando Docking...")
                 self.root.after(1000, self.advance_phase)
             elif self.mission_phase == 5:
                 # Guardamos el nodo anterior al llegar al target
                 self.target_previous_node = self.ros_node.last_previous_node
                 self.log_message(f"📍 Nodo anterior target: {self.target_previous_node}")
-                self.log_message("✅ Llegado a Target. Avanzando...")
+                self.log_message("✅ Llegado a Target. Iniciando Docking...")
                 self.root.after(1000, self.advance_phase)
             elif self.mission_phase == 4:
                 # Retroceso completado desde origen
@@ -425,7 +416,10 @@ class ControlPanel:
                 self.log_message("✅ Llegado a HOME. Misión completada.")
                 self.root.after(1000, self.advance_phase)
                 
-        # Docking status ignored as we use blind approach now
+        elif source == "DOCK" and status == "SUCCESS":
+            if self.mission_phase == 2 or self.mission_phase == 6:
+                self.log_message("✅ Docking ArUco Completado Exitosamente.")
+                self.root.after(1000, self.advance_phase)
 
     def advance_phase(self):
         if not self.is_active: return

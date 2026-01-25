@@ -38,6 +38,7 @@ setup(
             'aruco_generator = smart_warehouse.aruco_generator:main',
             'monitor_aruco = smart_warehouse.monitor_aruco:main',
             'aruco_pose_filter = smart_warehouse.aruco_pose_filter:main',
+            'aruco_approach = smart_warehouse.aruco_approach:main',
             'docking_aruco = smart_warehouse.docking_aruco:main',
             'graph_editor = smart_warehouse.graph_editor:main',
             'graph_visualizer = smart_warehouse.graph_visualizer:main',

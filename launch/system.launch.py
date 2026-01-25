@@ -22,7 +22,8 @@ def generate_launch_description():
         executable='waypoint_follower',
         name='graph_navigator',
         output='screen',
-        parameters=[{'graph_file': graph_file}]
+        parameters=[{'graph_file': graph_file},
+                    {'use_sim_time': True}]
     )
 
     # 3. Interface Node (GUI)
@@ -41,9 +42,29 @@ def generate_launch_description():
         output='screen'
     )
 
+    # 5. Aruco Approach (Integrated Manager)
+    aruco_approach = Node(
+        package='smart_warehouse',
+        executable='aruco_approach',
+        name='aruco_approach',
+        output='screen',
+        parameters=[{'use_sim_time': True}]
+    )
+
+    # 6. Aruco Pose Filter
+    aruco_pose_filter = Node(
+        package='smart_warehouse',
+        executable='aruco_pose_filter',
+        name='aruco_pose_filter',
+        output='screen',
+        parameters=[{'use_sim_time': True}]
+    )
+
     return LaunchDescription([
         navigation,
         waypoint_follower,
         interface,
-        lift_controller
+        lift_controller,
+        aruco_approach,
+        aruco_pose_filter
     ])
