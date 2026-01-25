@@ -2,15 +2,18 @@
 
 ## Descripción
 
-**smart_warehouse** es un paquete ROS2 para un almacén automatizado. Los robots siguen rutas predefinidas con Nav2 para el desplazamiento grueso y usan marcadores ArUco para la aproximación fina a la carga. El objetivo actual es validar el flujo completo en MVSIM y dejarlo listo para hardware real.
+**smart_warehouse** es un paquete ROS2 que actualmente se centra en las pruebas y validación de marcadores ArUco para aplicaciones de robótica móvil. 
 
-- **Navegación con Nav2**: Rutas predefinidas y planner de Nav2 para desplazamiento autónomo en el almacén.
-- **Aproximación fina con ArUco**: Marcadores como referencia final antes de recoger la carga.
-- **Herramientas ArUco**: Generación y detección de marcadores para pruebas y operación.
-- **Simulación en MVSIM**: Mundos y recursos para probar sin hardware.
-- **Mapas y rutas**: Mapas predefinidos y rutas almacenadas para configurar Nav2 según el layout del almacén.
+Aunque el proyecto forma parte de un desarrollo más amplio para un almacén automatizado, **en su estado actual este paquete contiene exclusivamente lo relativo a los tests de ArUco**, incluyendo herramientas para generación, detección, filtrado de pose y simulación de escenarios de prueba.
 
-**Estado**: Proyecto en desarrollo 🚀
+## Funcionalidades Actuales
+
+- **Test de ArUco**: Entornos de simulación en MVSIM para validar la detección de marcadores.
+- **Herramientas**:
+  - Generación de marcadores (`aruco_generator`).
+  - Monitoreo de detecciones (`monitor_aruco`).
+  - Filtrado de pose (`aruco_pose_filter`) para mejorar la estabilidad de la detección.
+  - Pruebas de docking/acoplamiento (`docking_aruco`).
 
 ## Requisitos
 
@@ -21,14 +24,15 @@
   - `std_msgs`
   - `sensor_msgs`
   - `geometry_msgs`
-  - `aruco_ros`
   - `tf2_ros`
+  - Paquete de detección de ArUco (ej. `ros2_aruco` o similar configurado en el launch)
+  - `mvsim` (para la simulación)
 
 ## Instalación
 
 ### 1. Clonar el repositorio
 
-Navega a la carpeta `src` de tu workspace de ROS2 y clona el repositorio:
+Navega a la carpeta `src` de tu workspace de ROS2:
 
 ```bash
 cd ~/ros2_ws/src
@@ -37,22 +41,14 @@ git clone <url-del-repositorio> smart_warehouse
 
 ### 2. Compilar con colcon
 
-Desde la raíz de tu workspace de ROS2, compila el paquete:
+Desde la raíz de tu workspace de ROS2:
 
 ```bash
 cd ~/ros2_ws
 colcon build --packages-select smart_warehouse
 ```
 
-Para compilar todo el workspace:
-
-```bash
-colcon build
-```
-
 ### 3. Fuente del setup
-
-Después de compilar, fuente el archivo de setup:
 
 ```bash
 source install/setup.bash
@@ -60,46 +56,39 @@ source install/setup.bash
 
 ## Uso
 
-El paquete proporciona los siguientes nodos ejecutables:
+### Lanzar entorno de pruebas
 
-- `aruco_generator`: Genera marcadores ArUco
-- `monitor_aruco`: Monitorea y rastrea marcadores
-- `docking_aruco`: Controla el acoplamiento de robots con marcadores
-- `docking_aruco_v2`: Versión mejorada del control de acoplamiento
-
-Para ejecutar un nodo:
+Para ejecutar la simulación de prueba de ArUco junto con la visualización en RViz:
 
 ```bash
-ros2 run smart_warehouse <nombre-del-nodo>
+ros2 launch smart_warehouse aruco_test.launch.py
 ```
 
-## Estructura del proyecto
+### Nodos ejecutables
+
+El paquete proporciona los siguientes nodos (ejecutables con `ros2 run smart_warehouse <nodo>`):
+
+- `aruco_generator`: Genera imágenes de marcadores ArUco.
+- `monitor_aruco`: Monitorea topics de ArUco.
+- `aruco_pose_filter`: Nodo para filtrar y suavizar las poses detectadas.
+- `docking_aruco`: Nodo para pruebas de lógica de acoplamiento.
+
+## Estructura relevante
 
 ```
 smart_warehouse/
 ├── aruco_markers/          # Marcadores generados
-├── aruco_textures/         # Texturas para simulación
-├── maps/                   # Mapas para Nav2 (layout del almacén)
-├── routes/                 # Rutas predefinidas para Nav2
-├── worlds/                 # Mundos MVSIM para simulación
-├── smart_warehouse/        # Código fuente del paquete
+├── config/                 # Configuraciones (ej. filtros)
+├── launch/                 # Launch files (aruco_test)
+├── smart_warehouse/        # Código fuente Python
 │   ├── aruco_generator.py
+│   ├── aruco_pose_filter.py
 │   ├── monitor_aruco.py
-│   ├── docking_aruco.py
-│   └── docking_aruco_v2.py
-├── resource/               # Archivos de índice del paquete
-├── test/                   # Tests y linters
-├── package.xml             # Metadatos del paquete ROS2
-├── setup.py                # Setup del paquete (ament_python)
-├── setup.cfg               # Configuración de ament/flake8
-└── other/                  # Notas u otros recursos
+│   └── docking_aruco.py
+├── rviz_configs/           # Configuraciones de visualización
+├── worlds/                 # Mundos de prueba MVSIM
+└── ...
 ```
-
-> Nota: los directorios `build/`, `install/` y `log/` los genera `colcon` y no se versionan.
-
-## Licencia
-
-Por definir
 
 ## Autor
 
